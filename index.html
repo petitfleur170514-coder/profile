@@ -28,14 +28,17 @@
       ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
       ::-webkit-scrollbar-thumb:hover { background: rgba(217, 119, 6, 0.5); }
       .glass-card { background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); border: 1px solid rgba(255, 255, 255, 0.05); }
-      body { cursor: none; }
-      a, button { cursor: none; }
+      /* Default cursor when not in cat mode */
+      body.cat-mode { cursor: none; }
+      body.cat-mode a, body.cat-mode button { cursor: none; }
+      /* Regular cursor otherwise */
+      body { cursor: auto; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-300 font-sans selection:bg-amber-500/30 selection:text-amber-100 overflow-x-hidden cursor-none flex flex-col min-h-screen lg:h-screen lg:overflow-hidden">
+<body class="bg-slate-950 text-slate-300 font-sans selection:bg-amber-500/30 selection:text-amber-100 overflow-x-hidden flex flex-col min-h-screen lg:h-screen lg:overflow-hidden">
     <div class="fixed inset-0 pointer-events-none z-0 opacity-10" style="background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px;"></div>
     
-    <div id="mouse-follower" class="fixed pointer-events-none z-[100] transition-transform duration-75 flex items-center justify-center mix-blend-screen" style="left: -500px; top: -500px;">
+    <div id="mouse-follower" class="fixed pointer-events-none z-[100] transition-transform duration-75 flex items-center justify-center mix-blend-screen hidden" style="left: -500px; top: -500px;">
         <div class="absolute w-[300px] h-[300px] bg-cyan-500/5 rounded-full blur-[80px]"></div>
         <i data-lucide="paw-print" class="relative w-8 h-8 text-cyan-400/80 -rotate-12"></i>
     </div>
@@ -117,7 +120,13 @@ Advisors: Kenneth Reinhard and Shu-mei Shih（史書美）</div></div><div class
     <script>
         lucide.createIcons();
         const follower = document.getElementById('mouse-follower');
-        window.addEventListener('mousemove', (e) => { follower.style.left = e.clientX + 'px'; follower.style.top = e.clientY + 'px'; });
+        window.addEventListener('mousemove', (e) => { 
+            if (document.body.classList.contains('cat-mode')) {
+                follower.style.left = e.clientX + 'px'; 
+                follower.style.top = e.clientY + 'px'; 
+            }
+        });
+
         const navToggle = document.getElementById('nav-toggle');
         const navContent = document.getElementById('nav-content');
         const navIcon = document.getElementById('nav-icon');
@@ -147,6 +156,18 @@ Advisors: Kenneth Reinhard and Shu-mei Shih（史書美）</div></div><div class
         function toggleProfileImage() {
            activeIdx = activeIdx === 0 ? 1 : 0;
            document.getElementById('profile-img').src = profileImages[activeIdx];
+           
+           // Toggle Cat Cursor
+           const body = document.body;
+           const follower = document.getElementById('mouse-follower');
+           
+           if (activeIdx === 1) {
+               body.classList.add('cat-mode');
+               follower.classList.remove('hidden');
+           } else {
+               body.classList.remove('cat-mode');
+               follower.classList.add('hidden');
+           }
         }
     </script>
 </body>
