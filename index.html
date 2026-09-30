@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Chien-heng Wu 吳建亨 · National Tsing Hua University</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&amp;family=Noto+Serif+TC:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f0e6;--panel:#faf7f0;--ink:#1c1a16;--ink2:#4f493f;--ink3:#6b6357;--line:rgba(28,26,22,.13);--acc:#96560f;--acc2:#1d5c60;--hover:rgba(29,92,96,.05);--grid:rgba(28,26,22,.04);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0c1016;--panel:#121821;--ink:#ebe5d8;--ink2:#b3ac9f;--ink3:#948d81;--line:rgba(255,255,255,.1);--acc:#e3a64e;--acc2:#86c8c6;--hover:rgba(134,200,198,.06);--grid:rgba(255,255,255,.028);color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0c1016;--panel:#121821;--ink:#ebe5d8;--ink2:#b3ac9f;--ink3:#948d81;--line:rgba(255,255,255,.1);--acc:#e3a64e;--acc2:#86c8c6;--hover:rgba(134,200,198,.06);--grid:rgba(255,255,255,.028);color-scheme:dark}
+html:not([data-lang=zh]) [data-l=zh],html[data-lang=zh] [data-l=en]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:48px 48px;color:var(--ink);font-family:'Newsreader','Noto Serif TC',Georgia,serif;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased;transition:background-color .3s,color .3s}
+::selection{background:color-mix(in oklab,var(--acc) 30%,transparent)}
+a{color:var(--acc2);text-decoration:none}
+a:hover{color:var(--acc)}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+[data-tabbtn][aria-selected=true]{color:var(--ink)!important;border-bottom-color:var(--acc)!important}
+[data-chip][aria-pressed=true]{background:var(--ink)!important;color:var(--bg)!important;border-color:var(--ink)!important}
+[data-hit=true]{background:color-mix(in oklab,var(--acc) 26%,transparent);border-radius:2px}
+html[data-cat] *{cursor:none!important}
+@media print{[data-noprint]{display:none!important}body{background-image:none}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<div ref="{{ followerRef }}" data-noprint="" style="position:fixed;left:0;top:0;z-index:100;pointer-events:none;display:{{ catDisp }};will-change:transform">
+  <div style="position:absolute;left:-150px;top:-150px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,color-mix(in oklab,var(--acc2) 16%,transparent),transparent 65%)"></div>
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--acc2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:-15px;top:-15px;transform:rotate(-12deg)"><circle cx="11" cy="4" r="2"></circle><circle cx="18" cy="8" r="2"></circle><circle cx="20" cy="16" r="2"></circle><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"></path></svg>
+</div>
+
+<header data-noprint="" style="position:sticky;top:0;z-index:30;background:color-mix(in oklab,var(--bg) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)">
+  <div style="max-width:1140px;margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:8px 28px;flex-wrap:wrap;min-height:64px">
+    <button onClick="{{ goHome }}" style="display:flex;align-items:baseline;gap:10px;padding:14px 0;white-space:nowrap">
+      <span style="font-size:19px;font-weight:500;letter-spacing:.01em">Chien-heng Wu</span>
+      <span style="font-family:'Noto Serif TC',serif;font-size:15px;color:var(--acc)">吳建亨</span>
+    </button>
+    <nav role="tablist" style="display:flex;gap:22px;flex:1 1 auto;overflow-x:auto;scrollbar-width:none;order:3;min-width:0">
+      <button data-tabbtn="" role="tab" aria-selected="{{ selHome }}" onClick="{{ goHome }}" style="padding:20px 0 18px;border-bottom:2px solid transparent;font-size:16px;color:var(--ink3);white-space:nowrap;transition:color .2s" style-hover="color:var(--ink)"><span data-l="en">Home</span><span data-l="zh">首頁</span></button>
+      <button data-tabbtn="" role="tab" aria-selected="{{ selResearch }}" onClick="{{ goResearch }}" style="padding:20px 0 18px;border-bottom:2px solid transparent;font-size:16px;color:var(--ink3);white-space:nowrap;transition:color .2s" style-hover="color:var(--ink)"><span data-l="en">Research</span><span data-l="zh">研究</span></button>
+      <button data-tabbtn="" role="tab" aria-selected="{{ selPubs }}" onClick="{{ goPubs }}" style="padding:20px 0 18px;border-bottom:2px solid transparent;font-size:16px;color:var(--ink3);white-space:nowrap;transition:color .2s" style-hover="color:var(--ink)"><span data-l="en">Publications</span><span data-l="zh">著作</span></button>
+      <button data-tabbtn="" role="tab" aria-selected="{{ selTalks }}" onClick="{{ goTalks }}" style="padding:20px 0 18px;border-bottom:2px solid transparent;font-size:16px;color:var(--ink3);white-space:nowrap;transition:color .2s" style-hover="color:var(--ink)"><span data-l="en">Talks</span><span data-l="zh">演講</span></button>
+      <button data-tabbtn="" role="tab" aria-selected="{{ selHonors }}" onClick="{{ goHonors }}" style="padding:20px 0 18px;border-bottom:2px solid transparent;font-size:16px;color:var(--ink3);white-space:nowrap;transition:color .2s" style-hover="color:var(--ink)"><span data-l="en">Honors</span><span data-l="zh">榮譽</span></button>
+      <button data-tabbtn="" role="tab" aria-selected="{{ selService }}" onClick="{{ goService }}" style="padding:20px 0 18px;border-bottom:2px solid transparent;font-size:16px;color:var(--ink3);white-space:nowrap;transition:color .2s" style-hover="color:var(--ink)"><span data-l="en">Service</span><span data-l="zh">服務</span></button>
+    </nav>
+    <div style="display:flex;align-items:center;gap:6px;margin-left:auto;order:2">
+      <label style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink3)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <input value="{{ q }}" onInput="{{ onSearch }}" placeholder="{{ searchPh }}" aria-label="Search" style="width:132px;border:0;outline:0;background:transparent;color:var(--ink);font:400 13px 'JetBrains Mono',monospace">
+      </label>
+      <button onClick="{{ toggleLang }}" aria-label="Switch language" style="height:36px;min-width:44px;padding:0 10px;border-radius:999px;font:500 13px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--ink2)" style-hover="background:var(--hover);color:var(--ink)"><span data-l="en">中文</span><span data-l="zh">EN</span></button>
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle dark mode" style="width:36px;height:36px;border-radius:999px;display:grid;place-items:center;color:var(--ink2)" style-hover="background:var(--hover);color:var(--ink)">
+        <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+        <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"></path></svg></sc-if>
+      </button>
+      <a href="https://www.dropbox.com/scl/fi/oov5xqqer56wr7z1mng06/CV_Oct-2026.pdf?rlkey=huqy31aogfiea91w69hl3u2jm&amp;st=zdk5wrxs&amp;dl=0" target="_blank" rel="noopener" aria-label="Download CV" style="display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);font:500 13px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--ink2);white-space:nowrap" style-hover="border-color:var(--acc2);color:var(--acc2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg><span>CV</span></a>
+    </div>
+  </div>
+</header>
+
+<main style="flex:1;width:100%;max-width:1140px;margin:0 auto;padding:0 28px;box-sizing:border-box">
+
+<sc-if value="{{ searching }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Search" style="padding:64px 0 40px">
+  <div style="font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--acc)">❖ <span data-l="en">Search the CV</span><span data-l="zh">全文搜尋</span></div>
+  <h1 style="margin:14px 0 8px;font-weight:400;font-size:clamp(34px,5vw,52px);line-height:1.1;letter-spacing:-.01em">“{{ q }}”</h1>
+  <div style="font:400 13px 'JetBrains Mono',monospace;color:var(--ink3);margin-bottom:28px">{{ resultCount }} <span data-l="en">matches</span><span data-l="zh">筆結果</span> · <button onClick="{{ clearSearch }}" style="color:var(--acc2);text-decoration:underline;text-underline-offset:3px"><span data-l="en">clear</span><span data-l="zh">清除</span></button></div>
+  <sc-for list="{{ results }}" as="r" hint-placeholder-count="0">
+    <button onClick="{{ r.go }}" style="display:flex;flex-wrap:wrap;gap:4px 32px;width:calc(100% + 32px);text-align:left;padding:18px 16px;margin:0 -16px;border-top:1px solid var(--line);border-radius:4px" style-hover="background:var(--hover)">
+      <div style="flex:0 0 9rem;font:500 12px/2 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--acc2)"><span data-l="en">{{ r.secEn }}</span><span data-l="zh">{{ r.secZh }}</span></div>
+      <div style="flex:1 1 320px;min-width:0">
+        <div style="font-size:18px;line-height:1.45;text-wrap:pretty"><sc-for list="{{ r.parts }}" as="pt"><span data-hit="{{ pt.hit }}">{{ pt.t }}</span></sc-for></div>
+        <div style="font-size:15px;color:var(--ink2);margin-top:2px">{{ r.meta }}</div>
+      </div>
+    </button>
+  </sc-for>
+  <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}"><p style="color:var(--ink2);border-top:1px solid var(--line);padding-top:20px"><span data-l="en">Nothing in the CV matches that. Try a name, a journal, or a year.</span><span data-l="zh">查無相符項目，請嘗試人名、期刊或年份。</span></p></sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ showHome }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="Home" style="padding:72px 0 24px">
+  <div style="display:flex;flex-wrap:wrap;gap:48px 72px;align-items:center">
+    <div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:18px;margin:0 auto">
+      <button onClick="{{ toggleCat }}" aria-label="Flip portrait" title="{{ flipTitle }}" style="position:relative;width:250px;height:312px;perspective:1400px">
+        <div style="position:absolute;inset:-11px;border:1px solid color-mix(in oklab,var(--acc) 55%,transparent);border-radius:999px 999px 10px 10px;pointer-events:none"></div>
+        <div style="position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.7,.15,1);transform:{{ flipT }}">
+          <div style="position:absolute;inset:0;border-radius:999px 999px 6px 6px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--panel)">
+            <img src="assets/portrait.jpg" alt="Chien-heng Wu" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block">
+          </div>
+          <div style="position:absolute;inset:0;border-radius:999px 999px 6px 6px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#e3e1d4">
+            <img src="assets/xiaohua-cat.png" alt="" style="width:100%;height:100%;object-fit:contain;object-position:50% 100%;padding-top:30px;box-sizing:border-box;display:block">
+          </div>
+        </div>
+      </button>
+      <div data-noprint="" style="display:flex;align-items:center;gap:10px;font:400 11.5px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--ink3)">
+        <span style="width:7px;height:7px;border-radius:50%;background:{{ dot0 }};transition:background .3s"></span>
+        <span style="width:7px;height:7px;border-radius:50%;background:{{ dot1 }};transition:background .3s"></span>
+        <span style="margin-left:4px">{{ flipCaption }}</span>
+      </div>
+    </div>
+
+    <div style="flex:1 1 440px;min-width:0">
+      <div style="font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)"><span data-l="en">Associate Professor · Comparative Literature &amp; Theory</span><span data-l="zh" style="letter-spacing:.3em">副教授</span></div>
+      <h1 style="margin:14px 0 0;font-weight:350;font-size:clamp(48px,7.4vw,86px);line-height:.98;letter-spacing:-.025em">Chien-heng Wu</h1>
+      <div style="margin-top:10px;font-family:'Noto Serif TC',serif;font-size:clamp(24px,3vw,32px);color:var(--acc);letter-spacing:.18em">吳建亨</div>
+      <p style="margin:28px 0 0;max-width:34em;font-size:20px;line-height:1.6;color:var(--ink2);text-wrap:pretty">
+        <span data-l="en">Associate Professor in the Department of Foreign Languages and Literature at National Tsing Hua University, Taiwan. Ph.D. in Comparative Literature, University of California, Los Angeles. His research spans critical theory, continental philosophy, the philosophy of technology and critical AI studies, and Sinophone and Taiwan studies.</span>
+        <span data-l="zh">國立清華大學外國語文學系副教授，美國加州大學洛杉磯分校（UCLA）比較文學博士。研究領域涵蓋批判理論、歐陸哲學、技術哲學與批判人工智慧研究，以及華語語系與台灣研究。</span>
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:30px">
+        <a href="mailto:sinthome@gapp.nthu.edu.tw" style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--bg);font:500 13px 'JetBrains Mono',monospace" style-hover="background:var(--acc);color:var(--bg)">sinthome@gapp.nthu.edu.tw</a>
+        <a href="https://orcid.org/0009-0004-1859-4588" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);color:var(--ink);font:500 13px 'JetBrains Mono',monospace" style-hover="border-color:var(--acc2);color:var(--acc2)">ORCID ↗</a>
+        <a href="https://scholars.nthu.edu.tw/esploro/profile/chienheng_wu/output/all?institution=886UST_NTHU" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);color:var(--ink);font:500 13px 'JetBrains Mono','Noto Serif TC',monospace" style-hover="border-color:var(--acc2);color:var(--acc2)"><span data-l="en">NTHU Scholars</span><span data-l="zh">清華學人</span> ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:28px 48px;margin-top:72px;padding-top:28px;border-top:1px solid var(--line)">
+    <div>
+      <div style="font:500 11.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px"><span data-l="en">Department</span><span data-l="zh">系所</span></div>
+      <div style="font-size:16.5px;line-height:1.55"><span data-l="en">Department of Foreign Languages and Literature<br>National Tsing Hua University</span><span data-l="zh">國立清華大學<br>外國語文學系</span></div>
+    </div>
+    <div>
+      <div style="font:500 11.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px"><span data-l="en">Address</span><span data-l="zh">地址</span></div>
+      <div style="font-size:16.5px;line-height:1.55"><span data-l="en">No. 101, Section 2, Kuang-Fu Road<br>Hsinchu 30013, Taiwan</span><span data-l="zh">30013 新竹市東區<br>光復路二段101號</span></div>
+    </div>
+    <div>
+      <div style="font:500 11.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px"><span data-l="en">Office</span><span data-l="zh">辦公室電話</span></div>
+      <div style="font-size:16.5px;line-height:1.55">+886-3-571-5131<br>ext. 42709</div>
+    </div>
+  </div>
+
+  <div style="margin-top:44px">
+    <div style="font:500 11.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px"><span data-l="en">Research interests</span><span data-l="zh">研究興趣</span></div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <span style="padding:6px 14px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 13px 'JetBrains Mono',monospace;color:var(--acc2)">Critical Theory</span>
+      <span style="padding:6px 14px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 13px 'JetBrains Mono',monospace;color:var(--acc2)">Critical AI Studies</span>
+      <span style="padding:6px 14px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 13px 'JetBrains Mono',monospace;color:var(--acc2)">Continental Philosophy</span>
+      <span style="padding:6px 14px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 13px 'JetBrains Mono',monospace;color:var(--acc2)">Philosophy of Technology</span>
+      <span style="padding:6px 14px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 13px 'JetBrains Mono',monospace;color:var(--acc2)">Postcolonial Studies</span>
+      <span style="padding:6px 14px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 13px 'JetBrains Mono',monospace;color:var(--acc2)">Sinophone Taiwan Studies</span>
+      <span style="padding:6px 14px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 13px 'JetBrains Mono',monospace;color:var(--acc2)">Alain Badiou</span>
+      <span style="padding:6px 14px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 13px 'JetBrains Mono',monospace;color:var(--acc2)">Bernard Stiegler</span>
+    </div>
+  </div>
+
+  <div style="margin-top:88px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:30px;letter-spacing:-.01em"><span data-l="en">Current research</span><span data-l="zh">執行中研究計畫</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+    <div style="position:relative;padding:clamp(28px,4vw,48px);background:var(--panel);border:1px solid var(--line);border-radius:6px">
+      <div style="display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.08em;color:var(--acc2)"><span>NSTC · 2026–2028</span><span style="color:var(--ink3);letter-spacing:.02em">NSTC 115-2410-H-007-059-MY2</span></div>
+      <h3 style="margin:18px 0 0;font-weight:400;font-size:clamp(26px,3.4vw,38px);line-height:1.18;letter-spacing:-.012em;max-width:26em;text-wrap:balance">Recomposing the Analog and the Digital: Transduction, Abduction and the Future Anterior of Artificial Intelligence</h3>
+      <div style="margin-top:14px;font-family:'Noto Serif TC',serif;font-size:17px;color:var(--ink2);line-height:1.7">類比與數位的多重構置：轉導、溯因推理與人工智慧的未來完成式</div>
+      <div style="margin-top:32px;padding-top:22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end">
+        <button onClick="{{ goResearch }}" style="font:500 13px 'JetBrains Mono',monospace;color:var(--acc2)" style-hover="color:var(--acc)"><span data-l="en">All projects →</span><span data-l="zh">所有計畫 →</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:88px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:30px;letter-spacing:-.01em"><span data-l="en">Upcoming events I'm organizing</span><span data-l="zh">近期籌備活動</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:20px">
+      <div style="display:flex;flex-direction:column;gap:12px;padding:28px 26px;border:1px solid var(--line);border-radius:6px;background:var(--panel)">
+        <div style="display:flex;justify-content:space-between;gap:12px;font:500 12px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--acc2)"><span>2027</span><span style="color:var(--acc)"><span data-l="en">Convener</span><span data-l="zh">召集人</span></span></div>
+        <div style="font-family:'Noto Serif TC',serif;font-size:22px;line-height:1.45">台灣人文學社理論營 2027</div>
+        <div style="display:flex;align-items:baseline;gap:12px"><span style="font:500 11.5px 'JetBrains Mono','Noto Serif TC',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)"><span data-l="en">Theme</span><span data-l="zh">主題</span></span><span style="font-family:'Noto Serif TC',serif;font-size:30px;line-height:1;color:var(--acc)">「戰」</span></div>
+        <div style="font-size:15px;color:var(--ink2)"><span data-l="en">Taiwan Humanities Society Theory Camp</span><span data-l="zh">台灣人文學社</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;padding:28px 26px;border:1px solid var(--line);border-radius:6px;background:var(--panel)">
+        <div style="display:flex;justify-content:space-between;gap:12px;font:500 12px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--acc2)"><span>2026–2027</span><span style="color:var(--acc)"><span data-l="en">Co-organizer</span><span data-l="zh">共同策劃</span></span></div>
+        <div style="font-size:22px;line-height:1.35;text-wrap:pretty">ACLA Worlds of Comparative Literature: State of the Discipline Report — Taiwan Workshop</div>
+        <div style="font-size:15px;color:var(--ink2)"><span data-l="en">Co-organized with Shu-mei Shih（史書美）</span><span data-l="zh">與史書美（Shu-mei Shih）共同策劃</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:88px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:30px;letter-spacing:-.01em"><span data-l="en">Selected publications (past five years)</span><span data-l="zh">近五年代表著作</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div><button onClick="{{ goPubs }}" style="font:500 13px 'JetBrains Mono',monospace;color:var(--acc2);white-space:nowrap" style-hover="color:var(--acc)"><span data-l="en">All →</span><span data-l="zh">全部 →</span></button></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:20px">
+      <sc-for list="{{ featured }}" as="p" hint-placeholder-count="3">
+        <a href="{{ p.href }}" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:14px;padding:28px 26px;min-height:230px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);transition:border-color .25s,transform .25s" style-hover="border-color:var(--acc);transform:translateY(-2px);color:var(--ink)">
+          <div style="display:flex;justify-content:space-between;gap:12px;font:500 12px 'JetBrains Mono',monospace;color:var(--acc2)"><span>{{ p.year }}</span><span style="color:var(--ink3)">{{ p.idx }}</span></div>
+          <div style="font-size:22px;line-height:1.3;letter-spacing:-.005em;text-wrap:pretty;flex:1">{{ p.title }}</div>
+          <div style="font-size:15px;color:var(--ink2)"><em>{{ p.vi }}</em>{{ p.vr }}</div>
+          <div style="font:500 12.5px 'JetBrains Mono',monospace;color:var(--acc2)">{{ p.cta }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ showResearch }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Research" style="padding:72px 0 24px">
+  <div style="font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">❖ 02</div>
+  <h1 style="margin:12px 0 56px;font-weight:350;font-size:clamp(44px,6vw,68px);line-height:1;letter-spacing:-.02em"><span data-l="en">Research</span><span data-l="zh">研究</span></h1>
+
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:28px"><span data-l="en">Research projects</span><span data-l="zh">研究計畫</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+  <sc-for list="{{ projects }}" as="x" hint-placeholder-count="6">
+    <div style="display:flex;flex-wrap:wrap;gap:6px 32px;padding:22px 16px;margin:0 -16px;border-top:1px solid var(--line);border-radius:4px" style-hover="background:var(--hover)">
+      <div style="flex:0 0 8.5rem;font:500 13px/1.9 'JetBrains Mono',monospace;color:var(--acc2)">{{ x.years }}<sc-if value="{{ x.current }}"><div style="display:inline-block;margin-top:6px;padding:1px 9px;border:1px solid var(--acc);border-radius:999px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc)"><span data-l="en">Current</span><span data-l="zh">執行中</span></div></sc-if></div>
+      <div style="flex:1 1 320px;min-width:0">
+        <div style="font-size:19.5px;line-height:1.4;text-wrap:pretty">{{ x.title }}</div>
+        <div style="margin-top:6px;font-family:'Noto Serif TC',serif;font-size:15px;line-height:1.7;color:var(--ink2)">{{ x.zh }}</div>
+        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px 16px;font:400 12.5px 'JetBrains Mono',monospace;color:var(--ink3)"><span>{{ x.agency }}</span><span>{{ x.no }}</span></div>
+      </div>
+    </div>
+  </sc-for>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:24px 64px;margin-top:80px">
+    <div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:28px"><span data-l="en">Academic employment</span><span data-l="zh">學術經歷</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+      <sc-for list="{{ employment }}" as="e" hint-placeholder-count="5">
+        <div style="padding:18px 0;border-top:1px solid var(--line)">
+          <div style="font:500 12.5px 'JetBrains Mono',monospace;color:var(--acc2)">{{ e.d }}</div>
+          <div style="margin-top:4px;font-size:19px">{{ e.role }}</div>
+          <div style="font-size:16px;color:var(--ink2)">{{ e.org }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:28px"><span data-l="en">Education</span><span data-l="zh">學歷</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+      <sc-for list="{{ education }}" as="e" hint-placeholder-count="4">
+        <div style="padding:18px 0;border-top:1px solid var(--line)">
+          <div style="font:500 12.5px 'JetBrains Mono',monospace;color:var(--acc2)">{{ e.d }}</div>
+          <div style="margin-top:4px;font-size:19px">{{ e.deg }}</div>
+          <div style="font-size:16px;color:var(--ink2);font-style:italic">{{ e.org }}</div>
+          <sc-if value="{{ e.diss }}"><div style="margin-top:12px;padding-left:14px;border-left:2px solid color-mix(in oklab,var(--acc) 45%,transparent);font-size:15.5px;color:var(--ink2);line-height:1.55"><span data-l="en">Dissertation</span><span data-l="zh">博士論文</span>: <em>Toward a Politics of the Common: History, Subjectivity and Emancipation</em><br><span data-l="en">Advisors</span><span data-l="zh">指導教授</span>: Kenneth Reinhard and Shu-mei Shih（史書美）</div></sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ showPubs }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Publications" style="padding:72px 0 24px">
+  <div style="font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">❖ 03</div>
+  <h1 style="margin:12px 0 36px;font-weight:350;font-size:clamp(44px,6vw,68px);line-height:1;letter-spacing:-.02em"><span data-l="en">Publications</span><span data-l="zh">著作</span></h1>
+  <div data-noprint="" style="display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;margin-bottom:28px">
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <sc-for list="{{ typeChips }}" as="c" hint-placeholder-count="4">
+        <button data-chip="" aria-pressed="{{ c.on }}" onClick="{{ c.go }}" style="height:34px;padding:0 14px;border:1px solid var(--line);border-radius:999px;font:400 13px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--ink2);white-space:nowrap;transition:all .2s" style-hover="border-color:var(--ink2)"><span data-l="en">{{ c.en }}</span><span data-l="zh">{{ c.zh }}</span> <span style="opacity:.6">{{ c.n }}</span></button>
+      </sc-for>
+    </div>
+    <div style="width:1px;height:22px;background:var(--line)"></div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <sc-for list="{{ langChips }}" as="c" hint-placeholder-count="3">
+        <button data-chip="" aria-pressed="{{ c.on }}" onClick="{{ c.go }}" style="height:34px;padding:0 14px;border:1px solid var(--line);border-radius:999px;font:400 13px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--ink2);white-space:nowrap;transition:all .2s" style-hover="border-color:var(--ink2)"><span data-l="en">{{ c.en }}</span><span data-l="zh">{{ c.zh }}</span></button>
+      </sc-for>
+    </div>
+  </div>
+  <sc-for list="{{ pubList }}" as="p" hint-placeholder-count="6">
+    <article style="display:flex;flex-wrap:wrap;gap:6px 32px;padding:22px 16px;margin:0 -16px;border-top:1px solid var(--line);border-radius:4px" style-hover="background:var(--hover)">
+      <div style="flex:0 0 8.5rem;font:500 13px/1.9 'JetBrains Mono',monospace;color:var(--acc2)">
+        <sc-if value="{{ p.noStatus }}">{{ p.year }}</sc-if>
+        <sc-if value="{{ p.hasStatus }}"><span style="display:inline-block;padding:1px 9px;border:1px solid var(--acc);border-radius:999px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);line-height:1.8"><span data-l="en">{{ p.stEn }}</span><span data-l="zh">{{ p.stZh }}</span></span></sc-if>
+      </div>
+      <div style="flex:1 1 340px;min-width:0">
+        <sc-if value="{{ p.hasUrl }}"><a href="{{ p.url }}" target="_blank" rel="noopener" style="font-size:19.5px;line-height:1.4;color:var(--ink);text-decoration:underline;text-decoration-color:color-mix(in oklab,var(--acc2) 45%,transparent);text-underline-offset:4px;text-wrap:pretty" style-hover="color:var(--acc2)">{{ p.title }}<span style="font:500 13px 'JetBrains Mono',monospace;color:var(--acc2);margin-left:6px">↗</span></a></sc-if>
+        <sc-if value="{{ p.noUrl }}"><div style="font-size:19.5px;line-height:1.4;text-wrap:pretty">{{ p.title }}</div></sc-if>
+        <div style="margin-top:4px;font-size:16px;line-height:1.55;color:var(--ink2)"><em>{{ p.vi }}</em>{{ p.vr }}</div>
+        <sc-if value="{{ p.hasNote }}"><div style="margin-top:8px;padding-left:12px;border-left:2px solid color-mix(in oklab,var(--acc) 40%,transparent);font-size:14.5px;color:var(--ink3);line-height:1.55">{{ p.note }}</div></sc-if>
+        <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 14px;font:400 12px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--ink3);letter-spacing:.04em"><span><span data-l="en">{{ p.typeEn }}</span><span data-l="zh">{{ p.typeZh }}</span></span><sc-if value="{{ p.hasIdx }}"><span style="color:var(--acc2)">{{ p.idx }}</span></sc-if></div>
+      </div>
+    </article>
+  </sc-for>
+  <div style="border-top:1px solid var(--line);padding-top:16px;font:400 12.5px 'JetBrains Mono',monospace;color:var(--ink3)">{{ pubShown }} / {{ pubTotal }}</div>
+</section>
+</sc-if>
+
+<sc-if value="{{ showTalks }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Talks" style="padding:72px 0 24px">
+  <div style="font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">❖ 04</div>
+  <h1 style="margin:12px 0 36px;font-weight:350;font-size:clamp(44px,6vw,68px);line-height:1;letter-spacing:-.02em"><span data-l="en">Talks &amp; presentations</span><span data-l="zh">演講與發表</span></h1>
+
+  <sc-if value="{{ hasUpcoming }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-bottom:56px;padding:26px 28px;background:var(--panel);border:1px solid var(--line);border-radius:6px">
+      <div style="font:500 11.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:6px"><span data-l="en">Upcoming</span><span data-l="zh">近期活動</span></div>
+      <sc-for list="{{ upcoming }}" as="t">
+        <div style="display:flex;flex-wrap:wrap;gap:6px 32px;padding:14px 0 4px">
+          <div style="flex:0 0 8.5rem;font:500 13px/1.9 'JetBrains Mono',monospace;color:var(--acc2)">{{ t.d }}</div>
+          <div style="flex:1 1 340px;min-width:0"><div style="font-size:19.5px;line-height:1.45;text-wrap:pretty">{{ t.title }}</div><div style="font-size:15.5px;color:var(--ink2);margin-top:2px">{{ t.venue }}</div></div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <div data-noprint="" style="display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;margin-bottom:24px;background:var(--panel)">
+    <button data-chip="" aria-pressed="{{ segConf }}" onClick="{{ goConf }}" style="height:34px;padding:0 16px;border:1px solid transparent;border-radius:999px;font:400 13px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--ink2);white-space:nowrap"><span data-l="en">Conference presentations</span><span data-l="zh">研討會發表</span> <span style="opacity:.6">{{ confCount }}</span></button>
+    <button data-chip="" aria-pressed="{{ segTalk }}" onClick="{{ goTalk }}" style="height:34px;padding:0 16px;border:1px solid transparent;border-radius:999px;font:400 13px 'JetBrains Mono','Noto Serif TC',monospace;color:var(--ink2);white-space:nowrap"><span data-l="en">Invited talks &amp; lectures</span><span data-l="zh">受邀演講</span> <span style="opacity:.6">{{ talkCount }}</span></button>
+  </div>
+
+  <sc-if value="{{ showConfList }}" hint-placeholder-val="{{ true }}">
+    <h2 style="margin:8px 0 10px;font-weight:400;font-size:26px;display:{{ printHeadDisp }}">Conference presentations</h2>
+    <sc-for list="{{ confList }}" as="t" hint-placeholder-count="8">
+      <div style="display:flex;flex-wrap:wrap;gap:6px 32px;padding:20px 16px;margin:0 -16px;border-top:1px solid var(--line);border-radius:4px" style-hover="background:var(--hover)">
+        <div style="flex:0 0 8.5rem;font:500 13px/1.9 'JetBrains Mono',monospace;color:var(--acc2)">{{ t.d }}</div>
+        <div style="flex:1 1 340px;min-width:0">
+          <div style="font-size:19px;line-height:1.45;text-wrap:pretty">{{ t.title }}</div>
+          <sc-if value="{{ t.hasUrl }}"><a href="{{ t.url }}" target="_blank" rel="noopener" style="display:inline-block;font-size:15.5px;margin-top:2px">{{ t.venue }} ↗</a></sc-if>
+          <sc-if value="{{ t.noUrl }}"><div style="font-size:15.5px;color:var(--ink2);margin-top:2px;text-wrap:pretty">{{ t.venue }}</div></sc-if>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ confCollapsible }}"><button data-noprint="" onClick="{{ toggleConf }}" style="width:100%;padding:16px 0;border-top:1px solid var(--line);text-align:left;font:500 13px 'JetBrains Mono',monospace;color:var(--acc2)" style-hover="color:var(--acc)">{{ confMoreLabel }}</button></sc-if>
+  </sc-if>
+
+  <sc-if value="{{ showTalkList }}" hint-placeholder-val="{{ false }}">
+    <h2 style="margin:40px 0 10px;font-weight:400;font-size:26px;display:{{ printHeadDisp }}">Invited talks, lectures and other academic activities</h2>
+    <sc-for list="{{ talkList }}" as="t" hint-placeholder-count="8">
+      <div style="display:flex;flex-wrap:wrap;gap:6px 32px;padding:20px 16px;margin:0 -16px;border-top:1px solid var(--line);border-radius:4px" style-hover="background:var(--hover)">
+        <div style="flex:0 0 8.5rem;font:500 13px/1.9 'JetBrains Mono',monospace;color:var(--acc2)">{{ t.d }}</div>
+        <div style="flex:1 1 340px;min-width:0">
+          <sc-if value="{{ t.hasUrl }}"><a href="{{ t.url }}" target="_blank" rel="noopener" style="font-size:19px;line-height:1.45;color:var(--ink);text-decoration:underline;text-decoration-color:color-mix(in oklab,var(--acc2) 45%,transparent);text-underline-offset:4px" style-hover="color:var(--acc2)">{{ t.title }} ↗</a></sc-if>
+          <sc-if value="{{ t.noUrl }}"><div style="font-size:19px;line-height:1.45;text-wrap:pretty">{{ t.title }}</div></sc-if>
+          <div style="font-size:15.5px;color:var(--ink2);margin-top:2px;text-wrap:pretty">{{ t.venue }}</div>
+        </div>
+      </div>
+    </sc-for>
+    <sc-if value="{{ talkCollapsible }}"><button data-noprint="" onClick="{{ toggleTalk }}" style="width:100%;padding:16px 0;border-top:1px solid var(--line);text-align:left;font:500 13px 'JetBrains Mono',monospace;color:var(--acc2)" style-hover="color:var(--acc)">{{ talkMoreLabel }}</button></sc-if>
+  </sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ showHonors }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Honors" style="padding:72px 0 24px">
+  <div style="font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">❖ 05</div>
+  <h1 style="margin:12px 0 44px;font-weight:350;font-size:clamp(44px,6vw,68px);line-height:1;letter-spacing:-.02em"><span data-l="en">Honors &amp; grants</span><span data-l="zh">榮譽與獎助</span></h1>
+  <sc-for list="{{ honorList }}" as="h" hint-placeholder-count="8">
+    <div style="display:flex;flex-wrap:wrap;gap:6px 32px;padding:20px 16px;margin:0 -16px;border-top:1px solid var(--line);border-radius:4px" style-hover="background:var(--hover)">
+      <div style="flex:0 0 8.5rem;font:500 13px/1.9 'JetBrains Mono',monospace;color:var(--acc2)">{{ h.y }}</div>
+      <div style="flex:1 1 340px;min-width:0">
+        <div style="font-size:19px;line-height:1.45">{{ h.en }}</div>
+        <sc-if value="{{ h.hasZh }}"><div style="font-family:'Noto Serif TC',serif;font-size:15px;color:var(--ink2);margin-top:2px">{{ h.zh }}</div></sc-if>
+        <sc-if value="{{ h.hasYears }}"><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px"><sc-for list="{{ h.years }}" as="yr"><span style="padding:1px 9px;border:1px solid color-mix(in oklab,var(--acc2) 35%,transparent);border-radius:999px;font:400 12px 'JetBrains Mono',monospace;color:var(--acc2)">{{ yr }}</span></sc-for></div></sc-if>
+      </div>
+    </div>
+  </sc-for>
+  <sc-if value="{{ honCollapsible }}"><button data-noprint="" onClick="{{ toggleHon }}" style="width:100%;padding:16px 0;border-top:1px solid var(--line);text-align:left;font:500 13px 'JetBrains Mono',monospace;color:var(--acc2)" style-hover="color:var(--acc)">{{ honMoreLabel }}</button></sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ showService }}" hint-placeholder-val="{{ false }}">
+<section data-screen-label="Service" style="padding:72px 0 24px">
+  <div style="font:500 12.5px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">❖ 06</div>
+  <h1 style="margin:12px 0 56px;font-weight:350;font-size:clamp(44px,6vw,68px);line-height:1;letter-spacing:-.02em"><span data-l="en">Professional service</span><span data-l="zh">專業服務</span></h1>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:64px">
+    <div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:26px"><span data-l="en">Board membership</span><span data-l="zh">編輯委員與理事</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+      <sc-for list="{{ boards }}" as="s" hint-placeholder-count="4"><div style="padding:16px 0;border-top:1px solid var(--line);font-size:17px;line-height:1.55">{{ s.t }}<sc-if value="{{ s.hasD }}"><div style="font:500 12.5px 'JetBrains Mono',monospace;color:var(--acc2);margin-top:4px">{{ s.d }}</div></sc-if></div></sc-for>
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:26px"><span data-l="en">Committees &amp; organizing</span><span data-l="zh">籌備與審查</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+      <sc-for list="{{ committees }}" as="s" hint-placeholder-count="6"><div style="display:flex;gap:18px;padding:14px 0;border-top:1px solid var(--line);font-size:17px;line-height:1.55"><span style="flex:0 0 5.6rem;font:500 12.5px/2 'JetBrains Mono',monospace;color:var(--acc2)">{{ s.d }}</span><span style="flex:1;min-width:0">{{ s.t }}</span></div></sc-for>
+    </div>
+  </div>
+
+  <div style="margin-top:72px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:26px"><span data-l="en">External reviewer</span><span data-l="zh">期刊審稿</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));column-gap:48px">
+      <sc-for list="{{ reviewer }}" as="s" hint-placeholder-count="10"><div style="padding:14px 0;border-top:1px solid var(--line)"><div style="font-size:17px;font-style:italic">{{ s.en }}</div><sc-if value="{{ s.hasZh }}"><div style="font-family:'Noto Serif TC',serif;font-size:14.5px;color:var(--ink2)">{{ s.zh }}</div></sc-if></div></sc-for>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:64px;margin-top:72px">
+    <div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:26px"><span data-l="en">Editorial</span><span data-l="zh">編輯</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+      <sc-for list="{{ editorial }}" as="s" hint-placeholder-count="2"><div style="display:flex;gap:18px;padding:14px 0;border-top:1px solid var(--line);font-size:17px;line-height:1.55"><span style="flex:0 0 5.6rem;font:500 12.5px/2 'JetBrains Mono',monospace;color:var(--acc2)">{{ s.d }}</span><span style="flex:1;min-width:0">{{ s.t }}</span></div></sc-for>
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px"><span style="color:var(--acc);font-size:15px">❖</span><h2 style="margin:0;font-weight:400;font-size:26px"><span data-l="en">Professional membership</span><span data-l="zh">學會會員</span></h2><div style="flex:1;height:1px;background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 60%,transparent),transparent)"></div></div>
+      <div style="padding:14px 0;border-top:1px solid var(--line);font-size:17px">中華民國比較文學學會</div>
+      <div style="padding:14px 0;border-top:1px solid var(--line);font-size:17px">台灣人文學社</div>
+      <div style="padding:14px 0;border-top:1px solid var(--line);font-size:17px">Society of Sinophone Studies (SSS)</div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+</main>
+
+<footer style="margin-top:96px;border-top:1px solid var(--line)">
+  <div style="max-width:1140px;margin:0 auto;padding:36px 28px 44px;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:center;justify-content:space-between;box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:14px;font:400 12.5px 'JetBrains Mono',monospace;color:var(--ink3)"><span style="color:var(--acc)">❖</span>© 2026 Chien-heng Wu 吳建亨</div>
+    <div style="font-family:'Noto Serif TC',serif;font-size:15px;letter-spacing:.2em;color:var(--acc)">心臓を捧げよ！</div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TABS = ['home','research','publications','talks','honors','service'];
+const SEC = { research:['Research','研究'], publications:['Publications','著作'], talks:['Talks','演講'], honors:['Honors','榮譽'], service:['Service','服務'] };
+const Q = s => '“' + s + '”';
+
+const PUBS = [
+  // [id, type, lang, year, title, vi(italic), vr, idx, status, url, note]
+  ['j1','journal','zh','','〈從世界到行星，再折返：以華語語系認識論重思認識論外交〉','','','','review'],
+  ['j2','journal','zh','','〈數位與類比的重新構置〉','','《中外文學》','','forthcoming'],
+  ['j3','journal','en','2025',Q('Order out of Chaos: The Pharmacology of Cybernetics in The Posthuman Comedy'),'Ex-Position',' 53 (2025): 27–50','THCI 第一級','','https://ex-position.org/wp-content/uploads/2025/07/02.-Chien-heng-Wu.pdf'],
+  ['j4','journal','zh','2025','〈「辨」與「變」之間：初探理論（化）台灣的可能與挑戰〉','','《台灣文學研究學報》40 (2025): 79–117','THCI 第一級'],
+  ['j5','journal','en','2023',Q('The Desire Called Neganthropology'),'Ex-Position',' 50 (2023): 21–49','THCI 第一級','','http://ex-position.org/wp-content/uploads/2024/01/03.-Chien-heng-Wu.pdf'],
+  ['j6','journal','en','2023',Q('The Question Concerning Generativity in Large Language Models'),'Critical Asia Archive',', December Issue (2023)','','','https://caarchives.org/the-question-concerning-generativity-in-large-language-models/'],
+  ['j7','journal','en','2022',Q('Will the Real Taiwanese Subject Please Stand Up? On Critique, Radicalism, and the Question of Decolonization'),'Taiwan Lit',' 3.2 (2022)','','','https://taiwanlit.org/commentaries/will-the-real-taiwanese-subject-please-stand-up-on-critique-radicalism-and-the-question-of-decolonization'],
+  ['j8','journal','zh','2021','〈非關係之關係：論傅柯權力分析中微觀與巨觀的皺摺與辯證復振的可能〉','','《中外文學》50.3 (2021): 55–89','THCI Core'],
+  ['j9','journal','zh','2018','〈巴迪烏的尼采：反哲學與大政治〉','','《中外文學》47.3 (2018): 21–56','THCI Core'],
+  ['j10','journal','zh','2015','〈斷裂與持恆：精神分析化政治或政治化精神分析？〉','','《中外文學》44.3 (2015): 140–176','THCI Core'],
+  ['j11','journal','en','2015',Q('Determining the Determination: Some Reflections on the Figure of Two in the Discourse of Emancipation'),'Concentric: Literary and Cultural Studies',' 41.2 (2015): 9–44','A&HCI','','http://www.concentric-literature.url.tw/issues/Uprisings%20and%20Revolutions%20in%20Global%20Context/2.pdf'],
+  ['j12','journal','en','2015',Q('Form-of-life between the Messianic As-Not and the Hypothetical As-If'),'Concentric: Literary and Cultural Studies',' 41.1 (2015): 9–40','A&HCI','','http://www.concentric-literature.url.tw/issues/Forms%20of%20Life%20Forms%20of%20Death/15.pdf'],
+  ['j13','journal','en','2009',Q('That Obscure Object (a) of Drive: The Politics of Negativity in Derrida and Žižek'),'Concentric: Literary and Cultural Studies',' 35.2 (2009): 69–102','THCI Core','','http://www.concentric-literature.url.tw/issues/The%20Couch/4.pdf'],
+  ['c1','chapter','zh','','〈擬造〉','','','','prep'],
+  ['c2','chapter','en','',Q('From Sovereign AI to AI Sovereignty: The Paradox of Taiwan’s Hardware Supremacy'),'AI and Asia','. Ed. Mei-chun Lee and Li-chun Hsiao.','','forthcoming'],
+  ['c3','chapter','en','2024',Q('Enjoy Your Sinophone'),'Sinophone Studies Across Disciplines: A Reader','. Ed. Howard Chiang and Shu-mei Shih. New York: Columbia University Press, 2024. 209–225.'],
+  ['c4','chapter','zh','2023','〈附錄：《跨界理論》座談會〉','','《跨界理論》，台北：聯經出版社，2023. 312–363。','','','','主持人：吳建亨；與談人：林芳玫、邱彥彬、吳建亨；回應人：史書美'],
+  ['c5','chapter','en','2022',Q('Untimely Meditations: The Contemporary, the Philosophy of Walking, and Related Ethical Matters in Remains of Life'),'The Musha Incident: A Reader on the Indigenous Uprising in Colonial Taiwan','. Ed. Michael Berry. New York: Columbia University Press, 2022. 149–176.','','','https://cup.columbia.edu/book/the-musha-incident/9780231197472'],
+  ['c6','chapter','zh','2020','〈不合時宜的沈思：《餘生》中當代的視角、散步的哲學、道德的思索〉（陳湘陽譯）','','《霧社事件：台灣歷史和文化讀本》，白睿文（Michael Berry）（編），台北：麥田出版社，2020. 371–404。','','','','Chinese translation of “Untimely Meditations: The Contemporary, the Philosophy of Walking and the Related Ethical Matters in Remains of Life.”'],
+  ['c7','chapter','zh','2020','〈何為世代？為何理論？〉','','《理論的世代：廖朝陽教授榮退紀念論文集》，林明澤、邱彥彬、陳春燕（編），台北：秀威出版社，2020. 72–92。'],
+  ['c8','chapter','zh','2018','〈一種正義，各自表述：時間、檔案、書寫〉','','《共再生的記憶──重建臺灣藝術史學術研討會論文集》，國立臺灣美術館，2018. 245–272。'],
+  ['c9','chapter','en','2015',Q('‘Tiger’s Leap into the Past’: Comparative Temporality and the Politics of Redemption in The Orphan of Asia'),'Comparatizing Taiwan','. Ed. Ping-hui Liao and Shu-mei Shih. New York: Routledge, 2015. 33–58.','','','https://www.routledge.com/Comparatizing-Taiwan/Shih-Liao/p/book/9781138094925'],
+  ['t1','translation','zh','2016','〈何謂華語語系研究？〉','','史書美著，吳建亨、劉威辰合譯。《文山評論》9.2，頁105–123。','','','','Original: Shih, Shu-mei. “The Concept of the Sinophone.” PMLA 126.3 (2011): 709–718; “Theory, Asia and the Sinophone.” Postcolonial Studies 13.4 (2010): 465–484.'],
+  ['t2','translation','zh','2011','〈華語語系的概念〉','','史書美著，吳建亨譯。《馬來西亞華人研究學刊》14，頁41–55。','','','','Original: Shih, Shu-mei. “The Concept of the Sinophone.” PMLA 126.3 (2011): 709–718.'],
+].map(([id,type,lang,year,title,vi='',vr='',idx='',status='',url='',note='']) => ({id,type,lang,year,title,vi,vr,idx,status,url,note}));
+
+const TYPE = { journal:['Journal article','期刊論文'], chapter:['Book chapter','專書篇章'], translation:['Translation','翻譯'] };
+const STATUS = { review:['Under review','審查中'], forthcoming:['Forthcoming','即將刊出'], prep:['In preparation','撰寫中'] };
+
+const CONF = [
+  ['2026 Sept. 19–20','2026-09-19','〈擬造〉','台灣理論關鍵詞III，國立台灣師範大學'],
+  ['2025 Nov. 08','2025-11-08','〈朝向新的普羅米修斯思想圖像〉','國科會人文處文學二學門第八屆（111-113年度）專題研究計畫成果發表會：「文學理論」場次，國立政治大學'],
+  ['2024 Dec. 08','2024-12-08','〈『為什麼普羅米修斯不該速援蓋婭？』：從技術行星化到後模控學的行星思維〉','「Worlding Taiwan：台灣文學研究的世界化」國際學術研討會暨2024臺灣人文學社年會「Worlding Theories」，國立中興大學'],
+  ['2024 Oct. 19–20','2024-10-19','〈辨與變之間：台灣主體性建構的幾點思考〉','「台灣哲學與文學文化的交涉」國際研討會，國立台灣師範大學'],
+  ['2022 June 16–18','2022-06-16',Q('‘One More Step’: The Promises and Perils of Left Prometheanism'),'Panel: “Ideology and Science in the Multinaturalist Conjuncture,” American Comparative Literature Association (ACLA) Annual Meeting'],
+  ['2022 June 16','2022-06-16',Q('Will the Real Taiwanese Subject Please Stand Up? On Critique, Radicality, and the Question of Decolonization'),'Panel: “Rethinking Traveling Theory: Re-Articulations and Hundred Years of Foreign Literature Studies in Taiwan,” ACLA Pre-Conference Seminar'],
+  ['2022 June 15','2022-06-15','〈速度、災難：從斯蒂格勒與加速主義觀點分析〉','第四十四屆中華民國比較文學學會年會「速度災難」（Speed Shambles），主題論壇，國立台灣師範大學'],
+  ['2020 Sep. 19','2020-09-19','〈政治面面「關」：論傅柯權力分析中微觀與巨觀的皺褶與辯證復振的可能〉','第四十二屆中華民國比較文學學會年會「微關係」，主題論壇，中央研究院'],
+  ['2019 Apr. 12–13','2019-04-12',Q('Enjoy Your Sinophone! Current Debate and the Path Forward.'),'Sinophone Studies: Interdisciplinary Perspectives and Critical Reflections, University of California, Los Angeles, USA'],
+  ['2019 Mar. 23–24','2019-03-23','〈何為世代？為何理論？〉','「理論世代」：廖朝陽教授榮退研討會，台灣大學'],
+  ['2019 Mar. 08','2019-03-08','〈人異／溢於人：演算法治理術與主體的未來〉','科技部人文司外文學門第六屆專題發表會，中正大學'],
+  ['2017 Nov. 18–19','2017-11-18','〈一種正義，各自表述：時間、檔案、書寫〉','共再生的記憶：重建臺灣藝術史學術研討會，國立臺灣美術館'],
+  ['2017 Oct. 9–11','2017-10-09',Q('Untimely Meditations: The Contemporary, the Philosophy of Walking, and Other Related Ethical Matters in Remains of Life.'),'Musha 1930: History, Memory, Culture, University of California, Los Angeles, USA','http://www.international.ucla.edu/apc/event/12719'],
+  ['2015 Oct. 2–5','2015-10-02',Q('‘I am one who waits’: Heidegger’s Being and Fanon’s Time.'),'Waiting: Time/Theory/Action in Global Asias Conference, National Chung Hsing University, Taiwan','https://atis2015waiting.wordpress.com/2015/08/04/october-2/'],
+  ['2013 June 21–23','2013-06-21',Q('Between Rupture and Consistency: Psychoanalyzing Politics or Politicizing Psychoanalysis?'),'Affect, Politics, Psychoanalysis Conference, National Taiwan University, Taiwan'],
+  ['2012 Sept. 30–Oct. 1','2012-09-30',Q('Cultural Politics qua contradictio in adiecto? Alain Badiou and the Question of Culture.'),'Culture as Critical Theory Conference, Academia Sinica, Taiwan'],
+  ['2012 July 11–13','2012-07-11',Q('Beyond Finitude: From a Dismembered Body to a Subjectivizable Body in Li Ang’s Visible Ghosts.'),'Contemporary Women’s Writing Association Conference, National Taiwan University, Taiwan'],
+  ['2011 Mar. 31–Apr. 3','2011-03-31',Q('From Critique of Ideology to Jargon of Authenticity: The Other Question in Wuhe’s Remains of Life.'),'AAS-ICAS Joint Conference, Honolulu, USA'],
+  ['2011 Jan. 21–24','2011-01-21',Q('Tiger’s Leap into the Past: The Orphan of Asia and the Politics of Redemption.'),'Comparatizing Taiwan Conference, UCLA and UCSD, Los Angeles and San Diego, USA'],
+];
+
+const TALKS = [
+  ['2026 Oct. 25','2026-10-25','“AI for All台灣嘉年華人文論壇”','新北市美術館'],
+  ['2026 Jul. 03','2026-07-03','〈從世界到行星，再折返：以華語語系作為認識論重思許煜的認識論外交〉','「跨學科的台灣與華語語系研究」，國立師範大學'],
+  ['2025 Jun. 06','2025-06-06','〈大型語言模型中的「生成性」問題：從卡爾維諾《模控學與鬼魂》談起〉','國科會人社中心學術論壇：「AI生成時代的文學、文化研究與教學」，逢甲大學'],
+  ['2025 May 17','2025-05-17','〈數位與類比的構置〉','第四十七屆中華民國比較文學年會「構置」（Compose），圓桌討論，國立成功大學'],
+  ['2025 Mar. 14 & 21','2025-03-14','客座講座，「數位與理論」','國立台灣大學'],
+  ['2025 Feb. 15–16','2025-02-15','〈人工智慧與其外部性：勞動與情動的數位轉譯〉','台灣人文學社理論營：「T-AI」，東吳大學'],
+  ['2024 Dec. 13–15','2024-12-13',Q('Forcing the Choice: The Missing Political Affect in Yuk Hui’s Planetary Thinking.'),'Theme: “6G: Genesis, Generativity, Gender, Genetics, Genealogy, Genocide,” Asia Theories Network Taipei December Workshop 2024, National Taiwan University'],
+  ['2024 Jun. 21–22','2024-06-21',Q('From Critique of Computation to Critical Computation: Abduction as a Logic of Fictioning'),'Theme: “AI: Facts, Fantasies, Fabrications,” Asia Theories Network Taipei June Workshop 2024, National Taiwan University'],
+  ['2024 Apr. 27','2024-04-27','〈狐狸與刺蝟—類比與數位：《後人間喜劇》的模控學革命〉','「理論談話」（臺灣大學文學院「從文化多樣性、島嶼到諸多世界」計畫），國立中山大學哲學所'],
+  ['2023 Jul. 13','2023-07-13',Q('Enjoy Your Sinophone!'),'國立台灣師範大學玉山學者史書美暑期課程〈華語語系與其不滿〉（Sinophone Studies and Its (Dis)contents），客座講座，國立台灣師範大學'],
+  ['2023 Apr. 29','2023-04-29','「世界的復魅：負人類世與政治的定言令式」（The Re-Enchantment of the World: The Neganthropocene and the Political Categorical Imperative）','國科會人文社會科學研究中心「反思人類世」工作坊，國立台灣師範大學'],
+  ['2023 Feb. 11','2023-02-11','〈起源的故事：人類、技術與當代數位科技的另類想像〉','台灣人文學社理論營：「宅」，國立台灣師範大學'],
+  ['2022 Nov. 03','2022-11-03','史書美教授《跨界理論》講座','政治大學華人文化主體性研究中心，座談會招集人、主持人暨與談人，Webex'],
+  ['2022 Jan. 28','2022-01-28','〈借鏡智利：對「另一種未來」的思考〉','《觸外》中外文學部落格'],
+  ['2022 Jan. 21','2022-01-21','導讀 Eden Medina, Cybernetic Revolutionaries: Technology and Politics in Allende’s Chile','中華民國比較文學學會與科技部人文社會研究中心「降臨」（Advent）研讀班，國立台灣大學'],
+  ['2021 Nov. 02','2021-11-02',Q('The Promises and Perils of Left Prometheanism'),'National Taiwan Normal University English Talk, Google Meet'],
+  ['2021 May 18','2021-05-18',Q('Do the Right Thing or Do Things Right'),'《觸外》中外文學部落格','https://www.chuwai.org/post/do-the-right-thing-or-do-things-right'],
+  ['2021 Mar. 27','2021-03-27','「批判作為新智能」','科技部文學二學門研習營，國立台灣大學'],
+  ['2020 Mar. 25','2020-03-25','關渡講座：「尼采與虛無主義」','國立臺北藝術大學'],
+  ['2019 Dec. 11','2019-12-11',Q('The Vicissitudes of the Posthuman.'),'National Tsing Hua University iPhD Seminar'],
+  ['2019 Nov. 16','2019-11-16','導讀 Mark B.N. Hansen, Feed-Forward: On the Future of Twenty-First-Century Media','中華民國比較文學學會與科技部人文社會研究中心「媒介」（Mediation）研讀班，國立台灣大學'],
+  ['2019 Nov. 09','2019-11-09','與談人','第四十二屆比較文學年會「微關係」會前系列論壇（一），國立台灣大學'],
+  ['2019 Sep. 27','2019-09-27','青年學者學術經驗分享','科技部專題研究計畫寫作工作坊（人文場）'],
+  ['2019 May 31','2019-05-31','「事件與世界」工作坊','國立中山大學哲學所'],
+  ['2019 Mar.','2019-03-01','〈理論、批判、思考〉','《科技部人文與社會科學簡訊》20.2'],
+  ['2019 Jan. 17–18','2019-01-17','「生命政治，或，生命／政治：從傅柯談起，以巴迪烏為例」','台灣人文學社理論營「賤」，國立台灣師範大學'],
+  ['2016 Sept. 02','2016-09-02','「債的時間政治」','台灣人文學社理論營「廢」，國立台灣師範大學'],
+  ['2015 Sept. 25','2015-09-25',Q('‘I am one who waits’: Heidegger’s Being and Fanon’s Time.'),'Taiwan Humanities Society, National Taiwan University'],
+  ['2015 June 5','2015-06-05','Respondent','NKNU International Symposium on Asian American Literature and Asia: Pedagogy, History, Memories, National Kaohsiung Normal University, Department of English'],
+  ['2015 Jan. 22–23','2015-01-22','與談人','台灣人文學社理論營「運動」（Movement），國立台灣藝術大學'],
+  ['2014 Sept. 27','2014-09-27','Badiou Reading Group: The Rebirth of History','National Chiao Tung University, Institute of Social Research and Culture Studies'],
+  ['2014 Jun. 23','2014-06-23','Discussant','“The Form-of-Life” Conference, National Taiwan Normal University, Department of English'],
+  ['2014 May 27','2014-05-27',Q('Thinking Violence, Reading Violence: Some Reflections on the Disjunction between Reason and Revolt.'),'National Taiwan Normal University, Department of English'],
+  ['2014 May 02','2014-05-02','「人思，物何在：當代歐陸哲學的本體轉向」','中華民國比較文學學會，國立成功大學'],
+];
+const toTalk = ([d,iso,title,venue,url='']) => ({d,iso,title,venue,url,hasUrl:!!url,noUrl:!url});
+
+const HONORS = [
+  ['2026','NTHU Ching-Jing Distinguished Talent Chair','114年清華清鏡傑出人才講座'],
+  ['2018–present','National Tsing Hua University Faculty Merit Pay Recipient','國立清華大學彈性薪資獎勵'],
+  ['2025','National Tsing Hua University Talent Development Fund Academic Research Award','國立清華大學傑出人才發展基金'],
+  ['2019','National Tsing Hua University Junior Research Award','國立清華大學第二十二屆新進人員研究獎'],
+  ['2018','Ta-You Wu Memorial Award','吳大猷先生紀念獎'],
+  ['2016','National Kaohsiung Normal University Junior Faculty Research Grant','國立高雄師範大學學術研究計畫補助'],
+  ['2015','National Kaohsiung Normal University Distinguished Research Award','國立高雄師範大學研究優良獎勵'],
+  ['2012–2013','Dissertation Year Fellowship, UCLA'],
+  ['2012','Summer Fellowship, UCLA Dept. of Comparative Literature'],
+  ['2011–2012','Chiang Ching-kuo Foundation Doctoral Fellowship','蔣經國基金會博士論文獎學金'],
+  ['2011','Lenart Pre-Dissertation Fellowship, UCLA'],
+  ['2011','Summer Fellowship, UCLA Dept. of Comparative Literature'],
+  ['2009–2010','Study Abroad Scholarship, Ministry of Education, Taiwan','教育部留學獎學金'],
+  ['2008','Summer Fellowship, UCLA Dept. of Comparative Literature'],
+  ['2007–2008','Fulbright Scholarship, Fulbright Foundation','傅爾布萊獎助學金'],
+].map(([y,en,zh='',years=null]) => ({y,en,zh,hasZh:!!zh,years:years||[],hasYears:!!years}));
+
+const PROJECTS = [
+  ['2026–2028','Recomposing the Analog and the Digital: Transduction, Abduction and the Future Anterior of Artificial Intelligence','類比與數位的多重構置：轉導、溯因推理與人工智慧的未來完成式','National Science and Technology Council','NSTC 115-2410-H-007-059-MY2',true],
+  ['2022–2026','Thinking Politics in the Age of Post-Humanity: Prometheanism and the Commitment to Critique','國科會2030優秀年輕學者研究計畫：後人類時代的政治思考：普羅米修斯主義與批判的承諾','National Science and Technology Council','NSTC 111-2628-H-007-005-MY4'],
+  ['2024–2025','Meeting Generative AI Halfway: Critical Thinking in the Age of Automated Learning','教育部教學實踐計畫：與生成式AI折衷相遇：自動化學習時代的批判思考','Ministry of Education Teaching Practice Research Project','MOE-113-TPRHA-0002-001Y1'],
+  ['2023–2024','Designing the Class Discussion Model on the Basis of Bernard Stiegler’s Concept of Hermeneutical Web','教育部教學實踐研究計畫：以斯蒂格勒的詮釋網概念設計課堂討論模式','Ministry of Education Teaching Practice Research Project','PHA1120647'],
+  ['2020–2023','The Posthuman and Its Vicissitudes','科技部吳大猷獎研究計畫：後人類與其變異','Ministry of Science and Technology','MOST 109-2423-H-007-001-MY3'],
+  ['2017–2020','The Politics of Time and the Time of Politics: A Preliminary Investigation','科技部專題研究計畫：初探時間的政治與政治的時間','Ministry of Science and Technology','MOST 106-2410-H-007-097-MY3'],
+].map(([years,t,zh,agency,no,current=false]) => ({years,title:Q(t),zh,agency,no,current}));
+
+const EMPLOYMENT = [
+  ['2022 Aug. – Present','Associate Professor','National Tsing Hua University'],
+  ['2017 Aug. – 2022 Jul.','Assistant Professor','National Tsing Hua University'],
+  ['2014 Aug. – 2017 Jul.','Assistant Professor','National Kaohsiung Normal University'],
+  ['2014 Feb. – 2014 Jul.','Assistant Professor','National Tsing Hua University'],
+  ['2013 Aug. – 2013 Oct.','Postdoctoral Fellow','College of Liberal Arts, National Sun Yat-sen University, Taiwan'],
+].map(([d,role,org]) => ({d,role,org}));
+
+const EDUCATION = [
+  ['2007 – 2013','Ph.D., Comparative Literature','University of California, Los Angeles, USA',true],
+  ['2001 – 2005','M.A., Foreign Languages and Literatures','National Taiwan University, Taiwan'],
+  ['1998 – 2001','B.A., Foreign Languages and Literature','National Tsing Hua University, Taiwan'],
+  ['1993 – 1998','Associate Degree, English Department','Wenzao Ursuline Junior College, Taiwan'],
+].map(([d,deg,org,diss=false]) => ({d,deg,org,diss}));
+
+const BOARDS = [
+  ['《同心圓》（Concentric: Literary and Cultural Studies）編輯委員（A&HCI）','2023–present'],
+  ['《英美文學評論》（Review of English and American Literature）編輯委員（THCI一級）','2024–2026'],
+  ['中華民國比較文學學會第二十五屆理事',''],
+  ['台灣人文學社第三、六、七、八屆理事',''],
+].map(([t,d]) => ({t,d,hasD:!!d}));
+
+const COMMITTEES = [
+  ['2026–2027','Co-organizer (with Shu-mei Shih) of ACLA Worlds of Comparative Literature: State of the Discipline Report Taiwan Workshop.'],
+  ['2026–2027','台灣人文學社理論營2027「戰」籌備團隊（召集人）'],
+  ['2025–','台灣理論關鍵詞III籌備團隊'],
+  ['2022','科技部人社中心「我國人文教育中奇幻文學之推動」計畫諮詢委員'],
+  ['2022','台灣人文學社年會「創／傷」籌辦委員'],
+  ['2020','台灣人文學社理論營「紲」（suà）籌備委員'],
+  ['2018','台南女中資優鑑定「英語文能力評量」審題委員'],
+  ['—','科技部研究計畫審查委員'],
+  ['—','教育部留學獎學金審查委員'],
+  ['—','教育部留學獎學金命題委員'],
+].map(([d,t]) => ({d,t}));
+
+const EDITORIAL = [
+  ['2019 Sept.','台灣人文學社通訊〈「記憶時代—香港」專輯〉編輯'],
+  ['2017 June','台灣人文學社通訊09〈「災難、空間與記憶」專輯〉編輯'],
+].map(([d,t]) => ({d,t}));
+
+const REVIEWER = [
+  ['Journal of Taiwan Literary Studies','《台灣文學研究學報》'],
+  ['Concentric: Literary and Cultural Studies','《同心圓》'],
+  ['Chung Wai Literary Quarterly','《中外文學》'],
+  ['Ex-Position','原《臺大語言與文學研究》'],
+  ['Journal of Life Education','《生命教育研究》'],
+  ['Journal of European and American Studies','《歐美研究》'],
+  ['NTU Studies in Language and Literature','《臺大語言與文學研究》'],
+  ['Review of English and American Literature','《英美文學評論》'],
+  ['Sun Yat-sen Journal of Humanities','《中山人文學報》'],
+  ['Tamkang Review','《淡江評論》'],
+  ['Compilation and Translation Review','《編譯論叢》'],
+].map(([en,zh]) => ({en,zh,hasZh:!!zh}));
+
+const FEATURED = ['j3','j4','j5'];
+const LIMIT = 8;
+
+class Component extends DCLogic {
+  state = { tab:'home', q:'', lang:'en', theme:'light', cat:false, pType:'all', pLang:'all', seg:'conf', moreConf:false, moreTalk:false, moreHon:false, printAll:false };
+  followerRef = React.createRef();
+
+  constructor(p){
+    super(p);
+    const I = [];
+    const add = (tab, title, meta) => I.push({ tab, title, meta, hay:(title+' '+meta).toLowerCase() });
+    PUBS.forEach(p => add('publications', p.title, [p.vi+p.vr, p.year, p.note].filter(Boolean).join(' · ')));
+    CONF.forEach(c => add('talks', c[2], c[0]+' · '+c[3]));
+    TALKS.forEach(c => add('talks', c[2], c[0]+' · '+c[3]));
+    HONORS.forEach(h => add('honors', h.en + (h.zh?'（'+h.zh+'）':''), h.y));
+    PROJECTS.forEach(x => add('research', x.title, x.years+' · '+x.zh+' · '+x.no));
+    EMPLOYMENT.forEach(e => add('research', e.role+', '+e.org, e.d));
+    EDUCATION.forEach(e => add('research', e.deg+', '+e.org, e.d));
+    BOARDS.forEach(s => add('service', s.t, s.d));
+    COMMITTEES.forEach(s => add('service', s.t, s.d));
+    EDITORIAL.forEach(s => add('service', s.t, s.d));
+    REVIEWER.forEach(s => add('service', s.en, s.zh));
+    this.index = I;
+  }
+
+  componentDidMount(){
+    let lang='en', theme=null, cat=false;
+    try { lang = localStorage.getItem('chw.lang') || 'en'; theme = localStorage.getItem('chw.theme'); } catch(e){}
+    this.mq = window.matchMedia('(prefers-color-scheme: dark)');
+    this.explicit = !!theme;
+    this.onMq = e => { if (!this.explicit) this.setState({ theme: e.matches ? 'dark' : 'light' }); };
+    this.mq.addEventListener && this.mq.addEventListener('change', this.onMq);
+    const h = (location.hash||'').slice(1);
+    const tab = TABS.includes(h) ? h : 'home';
+    this.onMove = e => { const f = this.followerRef.current; if (f) f.style.transform = `translate(${e.clientX}px,${e.clientY}px)`; };
+    window.addEventListener('mousemove', this.onMove);
+    this.onBefore = () => { document.documentElement.dataset.theme = 'light'; this.setState({ printAll:true }); };
+    this.onAfter = () => this.setState({ printAll:false });
+    window.addEventListener('beforeprint', this.onBefore);
+    window.addEventListener('afterprint', this.onAfter);
+    this.setState({ lang, tab, theme: theme || (this.mq.matches ? 'dark' : 'light') }, () => this.sync());
+  }
+  componentDidUpdate(){ this.sync(); }
+  componentWillUnmount(){
+    window.removeEventListener('mousemove', this.onMove);
+    window.removeEventListener('beforeprint', this.onBefore);
+    window.removeEventListener('afterprint', this.onAfter);
+    this.mq && this.mq.removeEventListener && this.mq.removeEventListener('change', this.onMq);
+  }
+  sync(){
+    const r = document.documentElement, s = this.state;
+    r.dataset.lang = s.lang; r.lang = s.lang === 'zh' ? 'zh-Hant' : 'en';
+    if (!s.printAll) r.dataset.theme = s.theme;
+    if (s.cat) r.dataset.cat = ''; else delete r.dataset.cat;
+  }
+
+  go(tab){
+    this.setState({ tab, q:'' });
+    try { history.replaceState(null, '', tab === 'home' ? location.pathname + location.search : '#' + tab); } catch(e){}
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  renderVals(){
+    const s = this.state, zh = s.lang === 'zh', all = s.printAll;
+    const q = s.q.trim().toLowerCase(), searching = !!q && !all;
+    const tabIs = t => all || (!searching && s.tab === t);
+
+    let results = [];
+    if (searching) {
+      results = this.index.filter(i => i.hay.includes(q)).slice(0, 60).map(i => {
+        const parts = []; const low = i.title.toLowerCase(); let pos = 0, k;
+        while ((k = low.indexOf(q, pos)) !== -1) { if (k > pos) parts.push({ t:i.title.slice(pos,k), hit:false }); parts.push({ t:i.title.slice(k,k+q.length), hit:true }); pos = k + q.length; }
+        if (pos < i.title.length) parts.push({ t:i.title.slice(pos), hit:false });
+        return { parts, meta:i.meta, secEn:SEC[i.tab][0], secZh:SEC[i.tab][1], go:() => this.go(i.tab) };
+      });
+    }
+
+    const decoratePub = p => ({ ...p, hasUrl:!!p.url, noUrl:!p.url, hasStatus:!!p.status, noStatus:!p.status,
+      stEn:p.status?STATUS[p.status][0]:'', stZh:p.status?STATUS[p.status][1]:'', typeEn:TYPE[p.type][0], typeZh:TYPE[p.type][1], hasIdx:!!p.idx, hasNote:!!p.note });
+    const pubs = PUBS.filter(p => (all || s.pType === 'all' || p.type === s.pType) && (all || s.pLang === 'all' || p.lang === s.pLang)).map(decoratePub);
+    const cnt = t => PUBS.filter(p => t === 'all' || p.type === t).length;
+    const typeChips = [['all','All','全部'],['journal','Journal articles','期刊論文'],['chapter','Book chapters','專書篇章'],['translation','Translations','翻譯']]
+      .map(([k,en,zh]) => ({ en, zh, n:cnt(k), on:s.pType === k, go:() => this.setState({ pType:k }) }));
+    const langChips = [['all','Any language','所有語言'],['en','English','英文'],['zh','中文','中文']]
+      .map(([k,en,zh]) => ({ en, zh, on:s.pLang === k, go:() => this.setState({ pLang:k }) }));
+
+    const featured = FEATURED.map(id => PUBS.find(p => p.id === id)).map(p => ({ ...p, href:p.url || '#publications', cta: p.url ? (zh ? '閱讀全文 ↗' : 'Read PDF ↗') : (zh ? '查看書目 →' : 'View entry →') }));
+
+    const today = new Date().toISOString().slice(0,10);
+    const conf = CONF.map(toTalk), talks = TALKS.map(toTalk);
+    const upcoming = [...conf, ...talks].filter(t => t.iso > today);
+    const more = (open, n) => open ? (zh ? '收合 ↑' : 'Show fewer ↑') : (zh ? `顯示全部 ${n} 筆 ↓` : `Show all ${n} ↓`);
+    const honList = (all || s.moreHon) ? HONORS : HONORS.slice(0, LIMIT);
+
+    return {
+      followerRef:this.followerRef, catDisp: s.cat ? 'block' : 'none',
+      q:s.q, searchPh: zh ? '搜尋履歷…' : 'Search CV…', searching, results, resultCount:results.length, noResults: searching && !results.length,
+      onSearch: e => this.setState({ q:e.target.value }), clearSearch: () => this.setState({ q:'' }),
+      toggleLang: () => { const lang = zh ? 'en' : 'zh'; try{localStorage.setItem('chw.lang', lang);}catch(e){} this.setState({ lang }); },
+      isDark: s.theme === 'dark', isLight: s.theme !== 'dark',
+      toggleTheme: () => { const theme = s.theme === 'dark' ? 'light' : 'dark'; this.explicit = true; try{localStorage.setItem('chw.theme', theme);}catch(e){} this.setState({ theme }); },
+      doPrint: () => { this.onBefore(); setTimeout(() => window.print(), 80); },
+      selHome:s.tab==='home' && !searching, selResearch:s.tab==='research' && !searching, selPubs:s.tab==='publications' && !searching,
+      selTalks:s.tab==='talks' && !searching, selHonors:s.tab==='honors' && !searching, selService:s.tab==='service' && !searching,
+      goHome:() => this.go('home'), goResearch:() => this.go('research'), goPubs:() => this.go('publications'),
+      goTalks:() => this.go('talks'), goHonors:() => this.go('honors'), goService:() => this.go('service'),
+      showHome:tabIs('home'), showResearch:tabIs('research'), showPubs:tabIs('publications'), showTalks:tabIs('talks'), showHonors:tabIs('honors'), showService:tabIs('service'),
+      toggleCat: () => this.setState({ cat:!s.cat }), flipT: s.cat ? 'rotateY(180deg)' : 'rotateY(0deg)',
+      dot0: s.cat ? 'var(--line)' : 'var(--acc2)', dot1: s.cat ? 'var(--acc2)' : 'var(--line)',
+      flipCaption: s.cat ? (zh ? '點擊返回' : 'Click to return') : (zh ? '點擊肖像' : 'Click the portrait'),
+      flipTitle: zh ? '翻轉肖像' : 'Flip portrait',
+      featured, projects:PROJECTS, employment:EMPLOYMENT, education:EDUCATION,
+      typeChips, langChips, pubList:pubs, pubShown:pubs.length, pubTotal:PUBS.length,
+      hasUpcoming: upcoming.length > 0, upcoming,
+      segConf: s.seg === 'conf', segTalk: s.seg === 'talk', goConf:() => this.setState({ seg:'conf' }), goTalk:() => this.setState({ seg:'talk' }),
+      confCount:conf.length, talkCount:talks.length,
+      showConfList: all || s.seg === 'conf', showTalkList: all || s.seg === 'talk', printHeadDisp: all ? 'block' : 'none',
+      confList: (all || s.moreConf) ? conf : conf.slice(0, LIMIT), confCollapsible: !all && conf.length > LIMIT, confMoreLabel: more(s.moreConf, conf.length), toggleConf:() => this.setState({ moreConf:!s.moreConf }),
+      talkList: (all || s.moreTalk) ? talks : talks.slice(0, LIMIT), talkCollapsible: !all && talks.length > LIMIT, talkMoreLabel: more(s.moreTalk, talks.length), toggleTalk:() => this.setState({ moreTalk:!s.moreTalk }),
+      honorList:honList, honCollapsible: !all && HONORS.length > LIMIT, honMoreLabel: more(s.moreHon, HONORS.length), toggleHon:() => this.setState({ moreHon:!s.moreHon }),
+      boards:BOARDS, committees:COMMITTEES, editorial:EDITORIAL, reviewer:REVIEWER,
+    };
+  }
+}
+</script>
+</body>
+</html>
